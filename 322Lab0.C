@@ -6,12 +6,18 @@ int binToNum(char binAr[]);
 
 int main() {
 	char bin8[8];
-	FILE *inF = NULL;
+	char FileName[40];
 	char symbol;
 	int last = 0;
+	FILE *inF = NULL;
+	
 
-	printf("Welcome to binary reader! Opening file to read. \n");
-	inF = fopen("binary.txt", "r");
+
+	//printf("Welcome to binary reader! Opening file to read. \n");
+	//inF = fopen("binary.txt", "r");
+	printf("Welcome to binary reader! Please enter name of file to read. \n");
+	scanf("%s", FileName);
+	inF = fopen(FileName, "r");
 	if (inF == NULL) {
 		perror("Error");
 		exit(1);
