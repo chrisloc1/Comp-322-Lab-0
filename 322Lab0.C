@@ -19,7 +19,6 @@ int main() {
 
 	printf("File successfully read, printing table. \n \n");
 	printf("-------- -------- -------- --------\n");
-	//printf("%-9s%-9s%-9s%-9s%-9s\n", "Original", "ASCII", "Decimal", "Parity", "T.Error");
 	printf("%-9s%-9s%-9s%-9s\n", "Original", "ASCII", "Decimal", "Parity");
 	printf("-------- -------- -------- --------\n");
 	
@@ -36,8 +35,6 @@ int main() {
 		printf("%-9c", symbol);
 		printf("%-9d", symbol);
 
-		/*if(bin8[0] == '0') printf("%-9s%-9s \n", "ODD", "TRUE");
-		else if (bin8[0] == '1') printf("%-9s%-9s \n", "EVEN", "FALSE");*/
 		if (bin8[0] == '0') printf("%-9s \n", "ODD");
 		else if (bin8[0] == '1') printf("%-9s \n", "EVEN");
 
@@ -61,7 +58,6 @@ int main() {
 	int fclose(FILE *fp);
 
 	system("pause");
-
 }
 
 int binToNum(char binAr[]) {
