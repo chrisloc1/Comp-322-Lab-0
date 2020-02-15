@@ -6,3 +6,4 @@ Activity Log:
 02/07/20 11:20- Cleaned up some formatting. Committed to git. Added binary txt file for reading from.
 02/07/20 11:24- Timestamps added to this document.
 02/08/20 03:20- Added terminal input read file. Moved around a couple of things.
+02/14/20 11:41- Changed to open() and read(), got it to run in terminal but trying to make it read from terminal.
