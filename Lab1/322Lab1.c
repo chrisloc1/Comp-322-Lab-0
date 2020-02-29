@@ -12,7 +12,6 @@ int main() {
 	pid_t pid;
 	int stat;
 	struct tms buf;
-	clock_t sinceboot;
 
 	printf("Start: %ld \n", time(NULL));
 
@@ -22,9 +21,9 @@ int main() {
 
 	reportInfo(pid, stat);
 
-	sinceboot = times(&buf);
+	times(&buf);
 
-	printf("\n User: %jd, SYS: %jd \n", buf.tms_utime, buf.tms_stime);
+	printf("\nUser: %jd, SYS: %jd \n", buf.tms_utime, buf.tms_stime);
 	printf("CUSER: %jd, CSYS: %jd \n", buf.tms_cutime, buf.tms_cstime);
 	printf("STOP: %ld \n", time(NULL));
 	
@@ -33,13 +32,14 @@ int main() {
 void reportInfo(pid_t passP, int ret) {
 	int stat;
 	
-
-	printf("PPID: %d, PID: %d ", getppid(), getpid());
 	waitpid(passP, &ret, 0);
+	printf("PPID: %d, PID: %d ", getppid(), getpid());
 
-	if (passP != 0) {
-		//waitpid(passP, &ret, 0);
-		printf("CPID: %d, RETVAL: %d ", passP, ret);
+	if (passP == 0) {
+		printf("\n");
 		exit(0);
+	}
+	else {
+		printf("CPID: %d, RETVAL: %d", passP, ret);
 	}
 }
