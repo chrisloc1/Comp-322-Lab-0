@@ -3,9 +3,10 @@
 #include<fcntl.h>
 #include<string.h> 
 #include <unistd.h> 
+#include <sys/types.h>
+#include <sys/wait.h> 
 
 int main(int argc, char* argv[]) {
-	//char FileName[500] = { '\0' };
 	char *newargv[] = { NULL, "hello", "world", NULL };
 	char *newenviron[] = { NULL };
 	pid_t pid;
@@ -15,7 +16,6 @@ int main(int argc, char* argv[]) {
 	pid = fork();
 
 	
-	//printf("PPID: %d, PID: %d ", getppid(), getpid());
 
 	if (pid == 0) {
 		execve(argv[1], newargv, newenviron);
@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		printf("CPID: %d \n", pid);
+		//printf("CPID: %d %s\n", pid, argv[2]);
 	}
 
-	//strcpy(FileName, argv[1]);
 	newargv[0] = argv[1];
 
 	
