@@ -1,0 +1,20 @@
+#MAKEFILE LAB2
+
+cd /mnt/c/users/chris/source/repos/322Lab2Launch/322Lab2Launch
+gcc Launch.c -o Launch.o
+gcc Tube.c -o Tube.o
+./Launch.o Tube.o
+
+cd /mnt/c/users/chris/source/repos/322Lab2Launch/322Lab2Launch
+gcc Launch.c -o Launch.o
+gcc Tube.c -o Tube.o
+gcc File1.c -o File1.o
+gcc File2.c -o File2.o
+./Launch.o File1.o
+
+cd /mnt/c/users/chris/source/repos/322Lab2Launch/322Lab2Launch
+gcc Launch.c -o Launch.o
+gcc Tube.c -o Tube.o
+gcc File1.c -o File1.o
+gcc File2.c -o File2.o
+./Tube.o File1.o File2.o
