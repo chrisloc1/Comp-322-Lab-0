@@ -7,7 +7,7 @@
 #include <sys/wait.h> 
 
 int main(int argc, char* argv[]) {
-	char *newargv[] = { NULL, "hello", "world", NULL };
+	char *newargv[] = { NULL };
 	char *newenviron[] = { NULL };
 	pid_t pid;
 	int stat;
