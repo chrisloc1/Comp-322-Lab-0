@@ -1,3 +1,4 @@
 Activity Log:
 4/24/2020 1:29AM - Uploaded start on code, with signals defined.
-4/24/2020 3:44am - Got a bit more done, but need to work on properly signaling.
+4/24/2020 3:44AM - Got a bit more done, but need to work on properly signaling.
+4/24/2020 5:26AM - On the verge of greatness, need to fix making the read arguments translate to numbers, so I can actually pass them corrrectly. Will do this after sleep.
