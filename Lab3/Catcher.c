@@ -19,42 +19,24 @@ int main(int argc, char* argv[]) {
     int count = 1;
     int Tcount = 0;
 
-    //printf("TEST SIG%s", argv[1]);
-
-    printf("Start: %ld \n", time(NULL));
+    printf("Start Time: %ld \n", time(NULL));
 
 	printf("PPID: %d, PID: %d \n", getppid(), getpid());
     //printf("%s", argv[1]);
 
-
-
     regSigs(argv);
 
-
-
-    signal(10, handleSig);
-    signal(SIGUSR2, handleSig);
-    signal(SIGTERM, handleSig);
-
-    kill(getpid(), SIGUSR1);
-    kill(getpid(), SIGUSR1);
+    //kill(getpid(), SIGVTALRM);
+    //kill(getpid(), SIGUSR1);
 
     while(termCount < 3) {
-        //strcpy(sig, argv[count]);
-        kill(getpid(), SIGTERM);
+        //kill(getpid(), SIGTERM);
         regSigs(argv);
-        printf("test");
+        pause();
+        //printf("test");
         //while (sig_int_flag == 0) pause();
     }
-    
-    /*if (signal(SIGUSR1, handleSig) == SIG_ERR)
-        err_sys("can't catch SIGUSR1");
-    if (signal(SIGUSR2, handleSig) == SIG_ERR)
-        err_sys("can't catch SIGUSR2");
-    for (; ; )
-        pause();*/
 
-    //pause();
 
     printf("Code done! Number of signals caught: %d\n", sigCount);
     return 0;
@@ -62,10 +44,21 @@ int main(int argc, char* argv[]) {
 
 void regSigs(char* sigs[]) {
     int count = 1;
+    
+    int sigNum = 0;
     while (sigs[count]) {
-        char hold[7] = "SIG";
-        strncat(hold, sigs[count], 4);
-        if(signal(hold, handleSig) == SIG_ERR) printf("can't catch %s", hold);
+        char hold[10] = "SIG";
+
+        strncat(hold, sigs[count], 7);
+        for (int i = 0; i <= 28; i++) {
+            if (strcmp(hold, argSigs[i]) == 0) {
+                //printf("works");
+                sigNum = i;
+            }
+            //printf("%s %s %s \n", argSigs[15], hold, argSigs[i]);
+        }
+
+        if(signal(sigNum, handleSig) == SIG_ERR) printf("can't catch %s", hold);
         count++;
     }
 }
@@ -73,8 +66,7 @@ void regSigs(char* sigs[]) {
 void handleSig(int sig)
 {
     printf("Signal: %s Caught at: %ld \n", argSigs[sig], time(NULL));
-    //regSigs[argv];
-    sig_int_flag = 1;         /* set flag for main loop to examine */
+    //sig_int_flag = 1;         /* set flag for main loop to examine */
     if (sig == 15) termCount++;
     else termCount = 0;
     sigCount++;
