@@ -6,11 +6,10 @@
 #include<string.h> 
 #include <time.h> 
 
-int sig_int_flag;
+//int sig_int_flag;
 int termCount = 0;
 int sigCount = 0;
 char* argSigs[31] = {"0", "SIGHUP", "SIGINT", "SIGQUIT", "SIGILL", "SIGTRAP", "SIGABRT OR SIGIOT", "SIGBUS", "SIGFPE", "SIGKILL", "SIGUSR1", "SIGSEGV", "SIGUSR2", "SIGPIPE", "SIGALRM", "SIGTERM", "SIGSTKFLT", "SIGCHLD", "SIGCONT","SIGSTOP", "SIGTSTP", "SIGTTIN", "SIGTTOU", "SIGURG", "SIGXCPU", "SIGXFSZ", "SIGVTALRM", "SIGPROF", "SIGWINCH"};
-//strcpy(argSigs, argv);
 
 void regSigs(char* sigs[]);
 void handleSig(int sig);
@@ -31,8 +30,8 @@ int main(int argc, char* argv[]) {
 
     while(termCount < 3) {
         //kill(getpid(), SIGTERM);
-        regSigs(argv);
         pause();
+        regSigs(argv);
         //printf("test");
         //while (sig_int_flag == 0) pause();
     }
