@@ -21,10 +21,13 @@ void think(int pNum);
 void handleSig(int sig);
 
 int main(int argc, char* argv[]) {
-	int phil[] = { 0, 1, 2, 3, 4 };
+	//int phil[] = { 0, 1, 2, 3, 4 };
 	int philNum = 0;
 	int CycleCount = 0;
 	//Semaphore chopstick[5];
+
+	printf("PPID: %d, PID: %d \n", getppid(), getpid());
+
 	sem_t* chopstick[5];
 	sem_t* returnVal = sem_open(SEM_FILE1, O_CREAT | O_EXCL, 0666, 1);
 	if (returnVal == SEM_FAILED) {
@@ -35,21 +38,25 @@ int main(int argc, char* argv[]) {
 	srand(time(NULL));
 	signal(SIGTERM, handleSig);
 
-	//eat(phil[0]);
-	//think(phil[1]);
-
-	pid_t groupPID = getpid();
+	/*pid_t groupPID = getpid();
 	pid_t main = getppid();
+	pid_t parentCheck = 1;
 
 	for (int i = 0; i < 4; i++) {
-		if(getppid == main) fork();
-		if (getpid() != groupPID) philNum == phil[i];
+		if(parentCheck > 0) parentCheck = fork();
+		if (parentCheck == 0) philNum == phil[i];
 		setpgrp();
-	}
+	}*/
 	
 	
-	chopstick[0] = returnVal;
+	//chopstick[0] = returnVal;
+	/*chopstick[0] = 1;
+	chopstick[1] = 1;
+	chopstick[2] = 1;
+	chopstick[3] = 1;
+	chopstick[4] = 1;*/
 
+	printf("%d", chopstick[0]);
 
 	do {
 		sem_wait(chopstick[philNum]);
@@ -72,13 +79,12 @@ int main(int argc, char* argv[]) {
 	sem_unlink(SEM_FILE1);
 	sem_destroy(chopstick[0]);
 
-	printf("Philosopher #%d completed %d cycles\n", phil[0], CycleCount);
+	printf("Philosopher #%d completed %d cycles\n", philNum, CycleCount);
 	return 0;
 }
 
 void eat(int pNum) {
 	printf("Philosopher #%d is eating \n", pNum);
-	//printf("%d \n", rand()%10000000);
 	usleep(rand()%5000000);
 }
 void think(int pNum) {
