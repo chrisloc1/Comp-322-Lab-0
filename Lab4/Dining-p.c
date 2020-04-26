@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
 	printf("PPID: %d, PID: %d \n", getppid(), getpid());
 
-	sem_t* chopstick[5];
+	sem_t chopstick[5];
 	sem_t* returnVal = sem_open(SEM_FILE1, O_CREAT | O_EXCL, 0666, 1);
 	if (returnVal == SEM_FAILED) {
 		perror(NULL);
@@ -55,18 +55,26 @@ int main(int argc, char* argv[]) {
 	chopstick[2] = 1;
 	chopstick[3] = 1;
 	chopstick[4] = 1;*/
+	for (int i = 0; i <= 4; i++) {
+		sem_init(&chopstick[i], 0, 1);
+		//printf("%d", chopstick[0]);
+	}
+	
 
-	printf("%d", chopstick[0]);
+	//sem_t mutex;
+	//sem_init(&mutex, 0, 1);
+	//sem_wait(&mutex);
+	//sem_post(&mutex);
 
 	do {
-		sem_wait(chopstick[philNum]);
+		sem_wait(&chopstick[philNum]);
 		eat(philNum);
-		sem_wait(chopstick[(philNum + 1) % 5]);
+		sem_wait(&chopstick[(philNum + 1) % 5]);
 		eat((philNum+1)%5);
 		// eat for a while
-		sem_post(chopstick[philNum]);
+		sem_post(&chopstick[philNum]);
 		think(philNum);
-		sem_post(chopstick[((philNum +1)%5)]);
+		sem_post(&chopstick[((philNum +1)%5)]);
 		think((philNum + 1) % 5);
 		// think for a while
 
@@ -75,9 +83,9 @@ int main(int argc, char* argv[]) {
 
 	
 
-	sem_close(chopstick[0]);
+	sem_close(&chopstick[0]);
 	sem_unlink(SEM_FILE1);
-	sem_destroy(chopstick[0]);
+	sem_destroy(&chopstick[0]);
 
 	printf("Philosopher #%d completed %d cycles\n", philNum, CycleCount);
 	return 0;
