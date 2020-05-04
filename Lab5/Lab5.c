@@ -7,13 +7,8 @@ int main(int argc, char* argv[]) {
 	unsigned int adress;
 	adress = (unsigned int)atoi(argv[1]);
 
-	/*if (argc != 2) {
-
-	}*/
-
 	printf("Adress %d contains: \n", adress);
 
-	//mask the page number
 	pNum = (adress & 0xFFFFF000) >> 12;
 	offSet = adress & 0x00000FFF;
 
