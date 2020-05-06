@@ -2,3 +2,4 @@ Activity Log:
 05/04/2020 12:44 AM - Added mole first, because it looked simple.
 05/04/2020 12:51 AM - Just added a file for spiritd, will work on it more later.
 05/06/2020 04:47 AM - Almost finished part 1, don't quite get how to deal with the file descriptors yet.
+05/06/2020 05:05 AM - Ok actually just figured it out, part 1 should be good.
