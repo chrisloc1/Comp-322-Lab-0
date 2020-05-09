@@ -12,6 +12,7 @@ void handleSig(int sig);
 
 pid_t MOLE1 = -1, MOLE2 = -1;
 int VAL = 0;
+char cwd[100];
 
 int main(int argc, char* argv[]) {
 	int fd0, fd1, fd2;
@@ -20,6 +21,15 @@ int main(int argc, char* argv[]) {
 	struct rlimit lim;
 
 	umask(0);
+
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+		printf("Current working dir: %s\n", cwd);
+	}
+	else {
+		perror("getcwd() error");
+		return 1;
+	}/**/
 
 	pid = fork();
 	if (pid < 0){
@@ -57,9 +67,9 @@ int main(int argc, char* argv[]) {
 		pause();
 	}/**/
 
-	/*
-	
-	char* newargv[] = { "/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.o", NULL, NULL };
+	/*chdir(cwd);
+	//char* newargv[] = { "/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.o", NULL, NULL };
+	char* newargv[] = { "mole.o", NULL, NULL };
 	newargv[1] = "mole1";
 	execv(newargv[0], newargv);*/
 
@@ -67,7 +77,8 @@ int main(int argc, char* argv[]) {
 }
 
 void handleSig(int sig){
-	char* newargv[] = { "/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.o", NULL, NULL};
+	char* newargv[] = { "mole.o", NULL, NULL};
+	//char* newargv[] = { strcat(cwd, "/mole.o"), NULL, NULL };
 	pid_t pid;
 	srand(time(NULL));
 
@@ -79,6 +90,7 @@ void handleSig(int sig){
 			printf("test1 \n");
 			pid = MOLE1 = fork();
 			if (pid == 0) {
+				chdir(cwd);
 				newargv[1] = "mole1";
 				execv(newargv[0], newargv);
 			}
@@ -87,6 +99,7 @@ void handleSig(int sig){
 			printf("test2 \n");
 			pid = MOLE2 = fork();
 			if (pid == 0) {
+				chdir(cwd);
 				newargv[1] = "mole2";
 				execv(newargv[0], newargv);
 			}
