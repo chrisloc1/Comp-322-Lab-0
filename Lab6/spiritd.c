@@ -10,7 +10,7 @@
 
 void handleSig(int sig);
 
-pid_t MOLE1 = 0, MOLE2 = 0;
+pid_t MOLE1 = -1, MOLE2 = -1;
 int VAL = 0;
 
 int main(int argc, char* argv[]) {
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 
 	chdir("/");
 	getrlimit(RLIMIT_NOFILE, &lim);
-	printf("before: %ld  %ld\n", lim.rlim_cur, lim.rlim_max);
+	//printf("before: %ld  %ld\n", lim.rlim_cur, lim.rlim_max);
 
 	signal(SIGTERM, handleSig);
 	signal(SIGUSR1, handleSig);
@@ -54,38 +54,40 @@ int main(int argc, char* argv[]) {
 
 	while (VAL != 1) {
 		pause();
-		//printf("test \n");
 	}/**/
+
+	/*
+	
+	char* newargv[] = { "/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.o", NULL, NULL };
+	newargv[1] = "mole1";
+	execv(newargv[0], newargv);*/
 
 	return 0;
 }
 
 void handleSig(int sig){
-	char* newenviron[] = { NULL };
-	char* newargv[] = { NULL, NULL, NULL };
-	srand(time(NULL));
+	char* newargv[] = { "mole.O", NULL, NULL};
 	pid_t pid;
+	srand(time(NULL));
 
 	if (sig == 10 || sig == 12) {
 		printf("USR1 signal recieved \n");
-		//if (sig == 10) kill(MOLE1, SIGQUIT);
-		//if (sig == 12) kill(MOLE2, SIGQUIT);
+		if (sig == 10 && MOLE1 == 0) kill(MOLE1, SIGQUIT);
+		else if (sig == 12 && MOLE2 == 0) kill(MOLE2, SIGQUIT);
 		if (rand() % 2 == 0) {
 			printf("test1 \n");
 			pid = MOLE1 = fork();
 			if (pid == 0) {
-				newargv[1] = "./mole.o";
-				execve("./mole.o", newargv, newenviron);
-				//char* argv[] = { "gcc", "-c", "-o", "/abc/molw.o", "/abc/mole.c", 0 };
-				//execvp(argv[0], argv);
+				newargv[1] = "mole1";
+				execv("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.O", newargv);
 			}
 		}
-		if (rand() % 2 == 1) {
+		else{
 			printf("test2 \n");
 			pid = MOLE2 = fork();
 			if (pid == 0) {
-				newargv[1] = "./mole.o";
-				execve("./mole.o", newargv, newenviron);
+				newargv[1] = "mole2";
+				execv("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.O", newargv);
 			}
 		}
 	}
