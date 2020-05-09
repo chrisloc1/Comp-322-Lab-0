@@ -5,3 +5,4 @@ Activity Log:
 05/06/2020 05:05 AM - Ok actually just figured it out, part 1 should be good.
 05/06/2020 06:12 PM - Almost done, think I wrote it all mostly right but gotta figure out how to test it.
 05/07/2020 05:37 AM - Just need to figure out what i'm doing wrong with execve, doesn't seem to want to open mole.
+05/09/2020 01:54 AM - So everything works, I just have no idea how to read from the file after the directory change without writing my own path.
