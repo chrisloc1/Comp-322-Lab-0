@@ -37,20 +37,21 @@ int main(int argc, char* argv[]) {
 	if (sid < 0) exit(1);
 
 	chdir("/");
+
 	getrlimit(RLIMIT_NOFILE, &lim);
-	//printf("before: %ld  %ld\n", lim.rlim_cur, lim.rlim_max);
 
-	signal(SIGTERM, handleSig);
-	signal(SIGUSR1, handleSig);
-	signal(SIGUSR2, handleSig);
-
-	for (int i = 0; i <= lim.rlim_max; i++) {
-		//close(i);
-	}
+	if (lim.rlim_max == RLIM_INFINITY)
+		lim.rlim_max = 1024;
+	for (int i = 0; i < lim.rlim_max; i++)
+		close(i);
 
 	fd0 = open("/dev/null", O_RDWR);
 	fd1 = dup(0);
 	fd2 = dup(0);
+
+	signal(SIGTERM, handleSig);
+	signal(SIGUSR1, handleSig);
+	signal(SIGUSR2, handleSig);
 
 	while (VAL != 1) {
 		pause();
@@ -66,7 +67,7 @@ int main(int argc, char* argv[]) {
 }
 
 void handleSig(int sig){
-	char* newargv[] = { "mole.O", NULL, NULL};
+	char* newargv[] = { "/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.o", NULL, NULL};
 	pid_t pid;
 	srand(time(NULL));
 
@@ -79,7 +80,7 @@ void handleSig(int sig){
 			pid = MOLE1 = fork();
 			if (pid == 0) {
 				newargv[1] = "mole1";
-				execv("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.O", newargv);
+				execv(newargv[0], newargv);
 			}
 		}
 		else{
@@ -87,7 +88,7 @@ void handleSig(int sig){
 			pid = MOLE2 = fork();
 			if (pid == 0) {
 				newargv[1] = "mole2";
-				execv("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/mole.O", newargv);
+				execv(newargv[0], newargv);
 			}
 		}
 	}
