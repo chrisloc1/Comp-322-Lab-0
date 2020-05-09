@@ -2,8 +2,8 @@
 #include<stdlib.h>
 
 int main(int argc, char* argv[]) {
-	FILE* logfile = fopen("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/lab6.log", "a");
-	//FILE* logfile = fopen("./lab6.log", "a");
+	//FILE* logfile = fopen("/mnt/c/users/chris/source/repos/322Lab6/322Lab6/lab6.log", "a");
+	FILE* logfile = fopen("./lab6.log", "a");
 	if (logfile == NULL) {
 		perror("Failed: did not read");
 	}
