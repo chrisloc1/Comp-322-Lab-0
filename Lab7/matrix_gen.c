@@ -20,11 +20,9 @@ void MatrixGen(int size) {
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
             rNum = rand() % 201;
-            if (rNum <= 100)
-                rNum = rNum * -1;
-            else if (rNum > 100)
-                rNum -= 100;
-
+            if (rNum <= 100) rNum = rNum * -1;
+            else if (rNum > 100) rNum -= 100;
+            
             printf("%d ", rNum);
         }
         printf("\n");
