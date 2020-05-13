@@ -14,18 +14,18 @@ int main(int argc, char* argv[]) {
 
 /**/
 void MatrixGen(int size) {
-    int randomVar;
+    int rNum;
     srand(time(NULL));
 
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
-            randomVar = rand() % 201;
-            if (randomVar <= 100)
-                randomVar = randomVar * -1;
-            else if (randomVar > 100)
-                randomVar -= 100;
+            rNum = rand() % 201;
+            if (rNum <= 100)
+                rNum = rNum * -1;
+            else if (rNum > 100)
+                rNum -= 100;
 
-            printf("%d ", randomVar);
+            printf("%d ", rNum);
         }
         printf("\n");
     }
